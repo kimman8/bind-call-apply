@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>New, This, Prototypes and Classes</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body>
+    <button class="one">Button 1</button>
+    <button class="two">Button 2</button>
+    <script>
+      const myDate = new Date('August 11, 2025');
+      console.dir(myDate);
+      console.log(myDate.getFullYear());
+
+      const names = new Array('wes', 'kait');
+      const wes = new Object({ name: 'wes' });
+
+      const span = document.createElement('span');
+      console.log(span);
+
+      String.prototype.sarcastic = function () {
+        //make sarcastic
+        const sarcastic = this.split('')
+          .map((char, i) => {
+            if (i % 2) {
+              return char.toUpperCase();
+            } else {
+              return char.toLowerCase();
+            }
+          })
+          .join('');
+        return sarcastic;
+      };
+      function Pizza(toppings = [], customer) {
+        console.log('making a pizza!');
+        //save the toppings that were passed in to this instance of pizza
+        this.toppings = toppings;
+        this.customer = customer;
+        this.id = Math.floor(Math.random() * 16777215).toString(16);
+        this.slices = 10;
+        // this.eat = function () {
+        //   if (this.slices) {
+        //     this.slices -= 1;
+        //     console.log(`chomp! you now  have ${this.slices} left!`);
+        //   } else {
+        //     console.log('no slices left!');
+        //   }
+        //   return this.slices;
+        // };
+      }
+
+      Pizza.prototype.eat = function () {
+        if (this.slices) {
+          this.slices -= 1;
+          console.log(`chomp! you now  have ${this.slices} left!`);
+        } else {
+          console.log('no slices left!');
+        }
+        return this.slices;
+      };
+
+      Pizza.prototype.describe = function () {
+        return `this pizza is for ${
+          this.customer
+        } with toppings ${this.toppings.join(',')} and there are ${
+          this.slices
+        } slices .`;
+      };
+
+      const pepperoniPizza = new Pizza(['pepperoni', 'anchovies'], 'wes');
+      const hawaianPizza = new Pizza(['pineapple', 'cheese'], 'kim');
+
+      // const button1 = document.querySelector('.one');
+      // const button2 = document.querySelector('.two');
+
+      // function tellMeAboutTheButton() {
+      //   console.log('outside', this);
+      //   setTimeout(() => {
+      //     console.log('inside', this);
+      //     this.textContent = 'you clicked me!';
+      //   }, 1000);
+      // }
+
+      // button1.addEventListener('click', tellMeAboutTheButton);
+      // button2.addEventListener('click', tellMeAboutTheButton);
+    </script>
+  </body>
+</html>
