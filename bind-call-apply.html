@@ -1,15 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Bind Call and Apply!</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Bind Call and Apply!</title>
-  <link rel="stylesheet" href="../base.css">
-</head>
+  <body>
+    <p>Hey</p>
+    <button>Clilck ME</button>
+    <div class="wrapper">
+      <p>hey im in a wrapper</p>
+    </div>
+    <script>
+      const person = {
+        name: 'Kim Man',
+        sayHi() {
+          console.log(this);
+          return `hey ${this.name}`;
+        },
+      };
+      const jenna = { name: 'jenna' };
+      const sayHi = person.sayHi.bind(jenna);
 
-<body>
+      //QS example
+      const $ = document.querySelector.bind(document);
+      const lookFor = document.querySelectorAll.bind(document);
+      const wrapper = document.querySelector('.wrapper');
+      const p = wrapper.querySelector('p');
 
-</body>
+      console.log(p);
+      console.log($('p'));
+      console.log(lookFor('p'));
 
+      const bill = {
+        total: 1000,
+        calculate: function (taxRate) {
+          console.log(this);
+          return this.total + this.total * taxRate;
+        },
+        describe(mealType, drinkType, taxRate) {
+          console.log(`your meal of ${mealType} and ${drinkType}
+          was $${this.calculate(taxRate)}.`);
+        },
+      };
+      const total = bill.calculate(0.13);
+      console.log(total);
+      const calc = bill.calculate.bind({ total: 500 }, 0.06);
+      console.log(calc());
+
+      const total2 = bill.calculate.call({ total: 500 }, 0.06);
+      console.log(total2);
+
+      const total3 = bill.calculate.apply({ total: 500 }, [0.06]);
+      console.log(total3);
+
+      const describe3 = bill.describe.call(bill, 'hotdog', 'wine', 0.1);
+      console.log(describe3);
+    </script>
+  </body>
 </html>
